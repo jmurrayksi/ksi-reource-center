@@ -222,9 +222,6 @@
 </div>
 
 <script>
-// ==========================================================
-//  CONFIGURATION — Your GitHub Pages base URL
-// ==========================================================
 const BASE_URL = 'https://jmurrayksi.github.io/ksi-reource-center';
 
 const pdfUrl  = (filename) => `${BASE_URL}/docs/${filename}`;
@@ -301,17 +298,17 @@ function buildVideoEmbed(item) {
       <div class="video-label">Sample — ${item.title}</div>
     </div>
     <p style="margin-top:16px">${item.desc}</p>
-    <p>This is a placeholder. Add a <code>videoSrc</code> to this item's data to embed your MP4 file.</p>`;
+    <p>This is a placeholder. A video file will be added here soon.</p>`;
 }
 
 // ========== DATA ==========
 const methodData = [
-  {id:'m1',cat:'overview',tag:'Overview',title:'Transformation Methodology Overview',desc:'Our proven end-to-end methodology for delivering successful transformations.',
+  {id:'m1',cat:'overview',tag:'Overview',title:'Enabling Workday Transformation',desc:'Our proven end-to-end methodology for delivering successful transformations.',
     embedPdf: pdfUrl('enabling-workday-transformation.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — METHODOLOGY</div><h4>Transformation Methodology Overview</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Five Core Phases:</strong></p><p><strong>1. Assess & Discover</strong> — Evaluate current state, identify gaps, stakeholder interviews, process mapping.</p><p><strong>2. Strategy & Design</strong> — Future-state vision, operating model, technology roadmap, success metrics.</p><p><strong>3. Plan & Prepare</strong> — Project plans, governance, communications, change management roadmaps.</p><p><strong>4. Execute & Deliver</strong> — Disciplined program management, testing, training, go-live readiness.</p><p><strong>5. Optimize & Sustain</strong> — Hypercare, adoption measurement, process refinement, value realization.</p></div>`},
-  {id:'m2',cat:'strategy',tag:'Strategy',title:'Transformation Strategy Framework',desc:'Aligning technology, process, and organizational change with business goals.',
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — METHODOLOGY</div><h4>Enabling Workday Transformation</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Five Core Phases:</strong></p><p><strong>1. Assess & Discover</strong> — Evaluate current state, identify gaps, stakeholder interviews, process mapping.</p><p><strong>2. Strategy & Design</strong> — Future-state vision, operating model, technology roadmap, success metrics.</p><p><strong>3. Plan & Prepare</strong> — Project plans, governance, communications, change management roadmaps.</p><p><strong>4. Execute & Deliver</strong> — Disciplined program management, testing, training, go-live readiness.</p><p><strong>5. Optimize & Sustain</strong> — Hypercare, adoption measurement, process refinement, value realization.</p></div>`},
+  {id:'m2',cat:'strategy',tag:'Strategy',title:'KSI Change Strategy and Delivery Overview',desc:'Aligning technology, process, and organizational change with business goals.',
     embedPdf: pdfUrl('ocm-strategy-and-delivery.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — STRATEGY</div><h4>Transformation Strategy Framework</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>🎯 Business Alignment</strong> — Anchored to measurable business outcomes.</p><p><strong>⚙️ Operating Model</strong> — Service delivery, COEs, shared services redesign.</p><p><strong>💻 Technology Roadmap</strong> — Vendor-agnostic, independent evaluation.</p><p><strong>👥 Change Readiness</strong> — Integrated from day one.</p></div>`},
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — STRATEGY</div><h4>KSI Change Strategy and Delivery Overview</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>🎯 Business Alignment</strong> — Anchored to measurable business outcomes.</p><p><strong>⚙️ Operating Model</strong> — Service delivery, COEs, shared services redesign.</p><p><strong>💻 Technology Roadmap</strong> — Vendor-agnostic, independent evaluation.</p><p><strong>👥 Change Readiness</strong> — Integrated from day one.</p></div>`},
   {id:'m3',cat:'strategy',tag:'Strategy',title:'Vendor Evaluation Strategy',desc:'Independent approach to evaluating and selecting best-fit technology partners.',
     content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — STRATEGY</div><h4>Vendor Evaluation Strategy</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Step 1:</strong> Requirements Definition — prioritized by business impact.</p><p><strong>Step 2:</strong> Market Scan & Shortlist — 3–4 best-suited vendors.</p><p><strong>Step 3:</strong> Structured Demonstrations — scenario-based, real-world.</p><p><strong>Step 4:</strong> Scoring & Analysis — weighted model across key dimensions.</p><p><strong>Step 5:</strong> Negotiation Support — 15–25% average savings.</p></div>`},
   {id:'m4',cat:'plans',tag:'Plans',title:'Program Implementation Plan',desc:'Phased implementation plan with milestones and deliverables.',
@@ -325,15 +322,15 @@ const methodData = [
 ];
 
 const commsData = [
-  {id:'c1',cat:'employees',tag:'Employees',title:'Transformation Kickoff Announcement',desc:'Company-wide announcement introducing the HR transformation initiative.',
+  {id:'c1',cat:'employees',tag:'Employees',title:'HR as Change Agent',desc:'How HR drives transformation as a strategic change agent across the organization.',
     embedPdf: pdfUrl('hr-as-change-agent.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Transformation Kickoff Announcement</h4><p><strong>To:</strong> All Employees &nbsp;|&nbsp; <strong>From:</strong> CHRO</p><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>Dear Team,</p><p>I'm excited to share that we are embarking on a significant initiative to modernize our HR systems and processes.</p><p><strong>What's Changing:</strong> A new HCM platform streamlining onboarding, benefits, time tracking, and performance management.</p><p><strong>Why This Matters:</strong> More intuitive, integrated tools aligned with how we work today.</p><p><strong>What to Expect:</strong> We've partnered with KSI Consulting to guide us. More details coming soon.</p></div>`},
-  {id:'c2',cat:'employees',tag:'Employees',title:'Go-Live Readiness Email',desc:'Pre-launch checklist for employees.',
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR as Change Agent</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This document explores how HR professionals can serve as strategic change agents during transformation initiatives.</p></div>`},
+  {id:'c2',cat:'employees',tag:'Employees',title:'Workday Intro for Business Leaders',desc:'Executive-level introduction to Workday and key capabilities for business leaders.',
     embedPdf: pdfUrl('workday-intro-for-leaders.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Go-Live Readiness Checklist</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>☑ Complete Training by [Date]<br>☑ Verify Personal Info<br>☑ Save Important Documents<br>☑ Bookmark the New Portal</p></div>`},
-  {id:'c3',cat:'employees',tag:'Employees',title:'Post Go-Live Support Guide',desc:'Support resources available after launch.',
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Workday Intro for Business Leaders</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>An executive overview of the Workday platform and its strategic value for business leaders.</p></div>`},
+  {id:'c3',cat:'employees',tag:'Employees',title:'HR Talking Points for Workday',desc:'Key talking points for HR teams to communicate Workday changes effectively.',
     embedPdf: pdfUrl('hr-talking-points.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Post Go-Live Support</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>🖥 Self-Service resources, video tutorials, FAQ<br>📞 Hypercare Weeks 1–4: Extended hours 7AM–7PM<br>📧 Ongoing: HR Help Desk Mon–Fri 8AM–5PM</p></div>`},
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR Talking Points for Workday</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>Prepared talking points to help HR teams address common questions about the Workday transition.</p></div>`},
   {id:'c4',cat:'managers',tag:'Managers',title:'Manager Change Champion Toolkit',desc:'Resource kit for managers to drive team adoption.',
     content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Manager Change Champion Toolkit</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Responsibilities:</strong> Attend briefings, share updates, encourage training, gather feedback.</p><p><strong>Talking Points:</strong> Training available, simpler time-off, go-live on track, multi-channel support.</p></div>`},
   {id:'c5',cat:'managers',tag:'Managers',title:'Manager Pre-Go-Live Actions',desc:'Specific actions required from managers before launch.',
@@ -359,18 +356,18 @@ const hireAssocPages = [
 ];
 
 const trainingData = [
-  {id:'t1',cat:'hr',tag:'HR',title:'Hire an Associate — Workday Process Guide',desc:'Complete guide for hiring employees through the Recruiting process and Ad-hoc hires in Workday.',
+  {id:'t1',cat:'hr',tag:'HR',title:'Basic Navigation for Employees',desc:'Complete guide for basic navigation in Workday for new employees.',
     embedPdf: pdfUrl('employee-basic-navigation.pdf'),
     pages: hireAssocPages},
-  {id:'t2',cat:'employees',tag:'Employees',title:'Self-Service Quick Start Guide',desc:'Step-by-step guide to navigate the new self-service portal.',
+  {id:'t2',cat:'employees',tag:'Employees',title:'Workday Position Management',desc:'Guide to managing positions and organizational structures in Workday.',
     embedPdf: pdfUrl('workday-position-management.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Employee Self-Service — Quick Start</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>1. Log In</strong> — SSO at [URL] with MFA setup.<br><strong>2. Personal Info</strong> — My Profile → Personal Details.<br><strong>3. Time Off</strong> — Time & Absence → Request Time Off.<br><strong>4. Pay Stubs</strong> — Pay → Pay Statements.<br><strong>5. Benefits</strong> — Benefits → Enroll during Open Enrollment.</p></div>`},
-  {id:'t3',cat:'employees',tag:'Employees',title:'Mobile App Training Guide',desc:'Using the mobile app for self-service on the go.',
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Workday Position Management</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This guide covers position creation, editing, and management within Workday.</p></div>`},
+  {id:'t3',cat:'employees',tag:'Employees',title:'Absence & Time Off Training Course',desc:'Training course covering absence management and time-off requests in Workday.',
     embedPdf: pdfUrl('absence-training-course.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Mobile App Guide</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>Download → Enter tenant URL → Sign in → Enable biometrics.</p><p>✅ Time-off ✅ Clock in/out ✅ Pay stubs ✅ Directory ✅ Benefits</p></div>`},
-  {id:'t4',cat:'managers',tag:'Managers',title:'Manager Approval Workflows',desc:'Approval workflows for time-off, expenses, and requisitions.',
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Absence & Time Off Training Course</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This course covers requesting time off, viewing balances, and managing absences in Workday.</p></div>`},
+  {id:'t4',cat:'managers',tag:'Managers',title:'Help Article - Additional Job Classification',desc:'Reference article for configuring additional job classifications in Workday.',
     embedPdf: pdfUrl('article-additional-job-classification-hr.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Manager Approval Workflows</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Time-Off:</strong> Review + Approve/Send Back<br><strong>Expenses:</strong> Verify receipts and policy limits<br><strong>Requisitions:</strong> Review justification → auto-routes</p><p>Set up delegation under My Account → Delegations.</p></div>`},
+    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Help Article - Additional Job Classification</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This help article explains how to add and manage additional job classifications for HR reporting.</p></div>`},
   {id:'t5',cat:'managers',tag:'Managers',title:'People Analytics Dashboard',desc:'Workforce analytics dashboards for data-driven decisions.',
     content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>People Analytics Dashboard</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>📊 Headcount &nbsp; 📈 Turnover &nbsp; ⏱ Absence &nbsp; 🎯 Performance</p><p>Filter by department, location, level, time. Export to Excel/PDF.</p></div>`},
   {id:'t6',cat:'leadership',tag:'Leadership',title:'Executive Sponsor Briefing Guide',desc:'Executive sponsor role and engagement expectations.',
@@ -378,9 +375,9 @@ const trainingData = [
 ];
 
 const videosData = [
-  {id:'v1',cat:'instructions',tag:'Instructions',title:'Create a Job Requisition',desc:'Video walkthrough demonstrating how to create a job requisition in the system.',duration:'Video',
+  {id:'v1',cat:'instructions',tag:'Instructions',title:'Create a Job Requisition - Managers',desc:'Video walkthrough demonstrating how to create a job requisition in the system.',duration:'Video',
     videoSrc: videoUrl('create-job-requisition.mp4')},
-  {id:'v2',cat:'concepts',tag:'Concepts',title:'What is HR Transformation?',desc:'Overview of HR transformation and how it drives business value.',duration:'5:12',
+  {id:'v2',cat:'concepts',tag:'Concepts',title:'Change Impact Review Sessions Overview',desc:'Overview of change impact review sessions and how they drive successful adoption.',duration:'5:12',
     videoSrc: videoUrl('explainer-change-impact-sessions.mp4')},
   {id:'v3',cat:'concepts',tag:'Concepts',title:'Understanding Change Management',desc:'Key change management concepts and organizational readiness.',duration:'4:45'},
   {id:'v4',cat:'instructions',tag:'Instructions',title:'How to Submit a Time-Off Request',desc:'Step-by-step instructions for requesting time off.',duration:'2:30'},
