@@ -78,4 +78,35 @@
 </head>
 <body>
 
-  <div c
+  <div class="toolbar">
+    <div class="logo">KSI Consulting | Resource Center</div>
+    <div class="doc-title" id="docTitle"></div>
+    <button class="close-btn" onclick="window.close()">✕ Close</button>
+  </div>
+
+  <div class="viewer-container" id="viewerContainer"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const fileUrl = params.get('file');
+    const title = params.get('title') || 'Document Preview';
+
+    document.getElementById('docTitle').textContent = title;
+    document.title = title + ' | KSI Resource Center';
+
+    if (fileUrl) {
+      const googleViewer = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(fileUrl);
+      const iframe = document.createElement('iframe');
+      iframe.src = googleViewer;
+      iframe.title = title;
+      document.getElementById('viewerContainer').appendChild(iframe);
+    } else {
+      const err = document.createElement('div');
+      err.className = 'error';
+      err.textContent = 'No document specified.';
+      document.getElementById('viewerContainer').appendChild(err);
+    }
+  </script>
+
+</body>
+</html>
