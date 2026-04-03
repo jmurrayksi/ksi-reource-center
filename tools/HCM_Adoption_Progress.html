@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workday HCM · Adoption Progress</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:      #0A1628;
+    --navy-mid:  #0D2137;
+    --navy-card: #111E30;
+    --blue:      #0066CC;
+    --blue-dim:  #1A4A80;
+    --blue-glow: rgba(0,102,204,0.18);
+    --teal:      #1D9E75;
+    --purple:    #7F77DD;
+    --amber:     #EF9F27;
+    --red:       #D85A30;
+    --white:     #FFFFFF;
+    --offwhite:  #E8EDF5;
+    --muted:     #607090;
+    --light:     #A8BACE;
+    --border:    rgba(255,255,255,0.08);
+    --border-lit: rgba(255,255,255,0.14);
+    --font:      'DM Sans', sans-serif;
+    --mono:      'DM Mono', monospace;
+  }
+
+  html, body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--font);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 32px 60px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .header-left { display: flex; flex-direction: column; gap: 5px; }
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: var(--blue);
+    border-radius: 1px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: var(--blue); }
+  .header-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .status-pill {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid;
+    transition: all 0.3s ease;
+  }
+
+  /* ── MAIN PROGRESS CARD ── */
+  .progress-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border-lit);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.6;
+  }
+
+  .progress-meta-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .progress-label { font-size: 11px; color: var(--muted); }
+  .progress-label strong { color: var(--light); font-weight: 500; }
+  .timeline-endpoints {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-bottom: 8px;
+  }
+  .timeline-endpoints .today { color: var(--blue); font-weight: 500; }
+
+  /* ── TRACK ── */
+  .track-outer {
+    position: relative;
+    height: 12px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    overflow: visible;
+    margin-bottom: 6px;
+  }
+  .track-elapsed {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    border-radius: 6px;
+    background: var(--blue);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .track-adoption-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    border-radius: 6px;
+    background: rgba(29,158,117,0.28);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .track-projection-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    border-radius: 6px 0 0 6px;
+    border-right: 2px dashed rgba(0,102,204,0.6);
+    background: rgba(0,102,204,0.08);
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* milestone pins */
+  .milestone {
+    position: absolute;
+    top: -6px;
+    width: 2px;
+    height: 24px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 1px;
+    z-index: 2;
+  }
+  .milestone::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 27px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--muted);
+    white-space: nowrap;
+    font-family: var(--mono);
+  }
+  .today-pin {
+    position: absolute;
+    top: -8px;
+    width: 3px;
+    height: 28px;
+    background: var(--blue);
+    border-radius: 2px;
+    z-index: 3;
+    transition: left 0.4s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 0 8px rgba(0,102,204,0.5);
+  }
+  .today-pin::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--blue);
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-weight: 500;
+  }
+
+  /* ── PHASE BAR ── */
+  .phase-row {
+    display: flex;
+    gap: 3px;
+    margin-top: 34px;
+    margin-bottom: 4px;
+  }
+  .phase-seg {
+    height: 4px;
+    border-radius: 2px;
+    flex: 1;
+    transition: opacity 0.3s;
+  }
+  .phase-seg.past { opacity: 1; }
+  .phase-seg.future { opacity: 0.25; }
+  .phase-labels {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .phase-label {
+    flex: 1;
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+    font-family: var(--mono);
+  }
+
+  /* ── STAT STRIP ── */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-item + .stat-item {
+    padding-left: 12px;
+    border-left: 1px solid var(--border);
+  }
+  .stat-label-sm { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-val-lg {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: color 0.3s;
+  }
+  .stat-delta { font-size: 11px; color: var(--muted); }
+
+  /* ── ROLE CHIPS GRID ── */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .role-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .role-card:hover { border-color: var(--border-lit); }
+  .role-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 12px 12px 0 0;
+  }
+  .role-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .role-avatar {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+  }
+  .role-tl {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .role-name { font-size: 12px; font-weight: 500; color: var(--white); margin-bottom: 1px; }
+  .role-users { font-size: 10px; color: var(--muted); }
+  .role-score {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 4px;
+    transition: color 0.3s;
+  }
+  .role-bar-wrap {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .role-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .role-target-mark {
+    position: absolute;
+    top: -1px;
+    width: 2px;
+    height: 6px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 1px;
+    transition: left 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .role-gap {
+    font-size: 10px;
+    font-family: var(--mono);
+    transition: color 0.3s;
+  }
+
+  /* ── CONTROLS CARD ── */
+  .controls-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-bottom: 20px;
+  }
+  .controls-title {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .ctrl-group { display: flex; flex-direction: column; gap: 8px; }
+  .ctrl-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .ctrl-name { font-size: 12px; color: var(--light); }
+  .ctrl-readout {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+    font-family: var(--mono);
+    letter-spacing: -0.02em;
+    transition: color 0.2s;
+  }
+  .ctrl-desc { font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--navy);
+    box-shadow: 0 0 0 2px var(--blue);
+    transition: box-shadow 0.2s;
+  }
+  input[type=range]:hover::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px rgba(0,102,204,0.3);
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--navy);
+    cursor: pointer;
+  }
+
+  /* ── PROJECTION CARD ── */
+  .projection-card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-bottom: 20px;
+  }
+  .proj-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .proj-title { font-size: 12px; font-weight: 500; color: var(--light); text-transform: uppercase; letter-spacing: 0.08em; }
+  .proj-gauge-wrap {
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .proj-gauge-bg {
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .proj-gauge-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+  }
+  .proj-target-line {
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 14px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 1px;
+    transition: left 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .proj-target-line::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--muted);
+    white-space: nowrap;
+    font-family: var(--mono);
+  }
+  .proj-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-top: 20px;
+  }
+  .proj-big {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .proj-num {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+  .proj-vs {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .proj-gap-chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    font-family: var(--mono);
+    transition: all 0.3s;
+  }
+  .proj-insight {
+    font-size: 12px;
+    color: var(--light);
+    line-height: 1.55;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border-left: 3px solid;
+    transition: border-color 0.3s;
+    margin-top: 14px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-brand { font-weight: 500; color: var(--light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .progress-card  { animation: fadeUp 0.5s ease 0.05s both; }
+  .roles-grid     { animation: fadeUp 0.5s ease 0.15s both; }
+  .controls-card  { animation: fadeUp 0.5s ease 0.25s both; }
+  .projection-card{ animation: fadeUp 0.5s ease 0.32s both; }
+  .footer         { animation: fadeUp 0.5s ease 0.38s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .page { padding: 20px 16px 40px; }
+    h1 { font-size: 22px; }
+    .stat-strip { grid-template-columns: repeat(2,1fr); }
+    .roles-grid { grid-template-columns: repeat(2,1fr); }
+    .controls-grid { grid-template-columns: 1fr; }
+    .proj-num { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">Workday HCM · Implementation analytics</div>
+      <h1>Adoption <span>progress</span> monitor</h1>
+      <div class="header-meta" id="header-meta">Acme Corp · Week 8 of 14 · 57% elapsed · Updated live</div>
+    </div>
+    <div class="header-right">
+      <div class="status-pill" id="status-pill">On watch</div>
+    </div>
+  </div>
+
+  <!-- MAIN PROGRESS CARD -->
+  <div class="progress-card">
+    <div class="progress-meta-row">
+      <div class="progress-label">Implementation timeline &nbsp;·&nbsp; <strong id="phase-label">Testing phase</strong></div>
+      <div class="progress-label"><strong id="elapsed-label">57% elapsed</strong> &nbsp;·&nbsp; <strong id="weeks-remaining-label">6 weeks remaining</strong></div>
+    </div>
+
+    <div class="timeline-endpoints">
+      <span>Go-live &nbsp;·&nbsp; Jan 6</span>
+      <span class="today" id="today-label">Today &nbsp;·&nbsp; Week 8</span>
+      <span>Engagement close &nbsp;·&nbsp; Jul 18</span>
+    </div>
+
+    <div class="track-outer" id="track-outer">
+      <div class="track-projection-fill" id="track-proj"></div>
+      <div class="track-adoption-fill"   id="track-adopt"></div>
+      <div class="track-elapsed"         id="track-el"></div>
+      <!-- milestone pins -->
+      <div class="milestone" style="left:28.5%" data-label="Training"></div>
+      <div class="milestone" style="left:71.4%" data-label="UAT"></div>
+      <div class="today-pin" id="today-pin" data-label="Wk 8"></div>
+    </div>
+
+    <!-- phase segments -->
+    <div class="phase-row" id="phase-row">
+      <div class="phase-seg past"   style="flex:2; background:#1A4A80;"></div>
+      <div class="phase-seg past"   style="flex:3; background:#1A5FA0;"></div>
+      <div class="phase-seg past"   style="flex:3; background:#1A75C0;"></div>
+      <div class="phase-seg past"   style="flex:2; background:#0066CC;"></div>
+      <div class="phase-seg future" style="flex:2; background:#0066CC;"></div>
+      <div class="phase-seg future" style="flex:2; background:#0066CC;"></div>
+    </div>
+    <div class="phase-labels">
+      <div class="phase-label" style="flex:2;">Discovery</div>
+      <div class="phase-label" style="flex:3;">Config</div>
+      <div class="phase-label" style="flex:3;">Testing</div>
+      <div class="phase-label" style="flex:2;">Training</div>
+      <div class="phase-label" style="flex:2;">UAT</div>
+      <div class="phase-label" style="flex:2;">Stabilise</div>
+    </div>
+
+    <!-- stat strip -->
+    <div class="stat-strip">
+      <div class="stat-item">
+        <div class="stat-label-sm">Overall adoption</div>
+        <div class="stat-val-lg" id="s-adoption" style="color:var(--blue);">73%</div>
+        <div class="stat-delta" id="s-adoption-d">↑ 6 pts this sprint</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label-sm">Tasks on time</div>
+        <div class="stat-val-lg" id="s-ontime">83%</div>
+        <div class="stat-delta">↑ 5 pts vs prior</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label-sm">Never attempted</div>
+        <div class="stat-val-lg" id="s-never" style="color:var(--red);">18%</div>
+        <div class="stat-delta" style="color:var(--red);">↑ 3 pts — needs attention</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label-sm">Sprint velocity</div>
+        <div class="stat-val-lg" id="s-velocity">+6 pts</div>
+        <div class="stat-delta" id="s-velocity-d">avg. across all roles</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROLE CHIPS -->
+  <div class="roles-grid">
+
+    <div class="role-card">
+      <div class="role-accent" style="background:var(--blue);"></div>
+      <div class="role-header">
+        <div>
+          <div class="role-name">HR professionals</div>
+          <div class="role-users">142 users</div>
+        </div>
+        <div class="role-avatar" style="background:rgba(0,102,204,0.18);color:var(--blue);">HR</div>
+      </div>
+      <div class="role-score" id="hr-score" style="color:var(--blue);">91%</div>
+      <div class="role-bar-wrap">
+        <div class="role-bar-fill" id="hr-bar" style="width:91%;background:var(--blue);"></div>
+        <div class="role-target-mark" id="hr-target"></div>
+      </div>
+      <div class="role-gap" id="hr-gap" style="color:var(--teal);">↑ On target</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-accent" style="background:var(--purple);"></div>
+      <div class="role-header">
+        <div>
+          <div class="role-name">Leadership</div>
+          <div class="role-users">88 users</div>
+        </div>
+        <div class="role-avatar" style="background:rgba(127,119,221,0.18);color:var(--purple);">LD</div>
+      </div>
+      <div class="role-score" id="ld-score" style="color:var(--purple);">68%</div>
+      <div class="role-bar-wrap">
+        <div class="role-bar-fill" id="ld-bar" style="width:68%;background:var(--purple);"></div>
+        <div class="role-target-mark" id="ld-target"></div>
+      </div>
+      <div class="role-gap" id="ld-gap" style="color:var(--red);">↓ 12 pts to target</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-accent" style="background:var(--teal);"></div>
+      <div class="role-header">
+        <div>
+          <div class="role-name">Managers</div>
+          <div class="role-users">610 users</div>
+        </div>
+        <div class="role-avatar" style="background:rgba(29,158,117,0.18);color:var(--teal);">MG</div>
+      </div>
+      <div class="role-score" id="mg-score" style="color:var(--teal);">77%</div>
+      <div class="role-bar-wrap">
+        <div class="role-bar-fill" id="mg-bar" style="width:77%;background:var(--teal);"></div>
+        <div class="role-target-mark" id="mg-target"></div>
+      </div>
+      <div class="role-gap" id="mg-gap" style="color:var(--amber);">↓ 8 pts to target</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-accent" style="background:var(--amber);"></div>
+      <div class="role-header">
+        <div>
+          <div class="role-name">Employees</div>
+          <div class="role-users">3,980 users</div>
+        </div>
+        <div class="role-avatar" style="background:rgba(239,159,39,0.18);color:var(--amber);">EM</div>
+      </div>
+      <div class="role-score" id="em-score" style="color:var(--amber);">62%</div>
+      <div class="role-bar-wrap">
+        <div class="role-bar-fill" id="em-bar" style="width:62%;background:var(--amber);"></div>
+        <div class="role-target-mark" id="em-target"></div>
+      </div>
+      <div class="role-gap" id="em-gap" style="color:var(--red);">↓ 18 pts to target</div>
+    </div>
+
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls-card">
+    <div class="controls-title">Scenario controls &nbsp;·&nbsp; adjust to model different outcomes</div>
+    <div class="controls-grid">
+
+      <div class="ctrl-group">
+        <div class="ctrl-top">
+          <div class="ctrl-name">Implementation week</div>
+          <div class="ctrl-readout" id="ctrl-week">Week 8</div>
+        </div>
+        <input type="range" id="slider-week" min="1" max="14" value="8" step="1">
+        <div class="ctrl-desc">Scrub through the engagement timeline to show how the dashboard evolves week by week</div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="ctrl-top">
+          <div class="ctrl-name">Adoption target at close</div>
+          <div class="ctrl-readout" id="ctrl-target">85%</div>
+        </div>
+        <input type="range" id="slider-target" min="65" max="95" value="85" step="1">
+        <div class="ctrl-desc">Adjust the agreed end-of-engagement adoption goal to model different client commitments</div>
+      </div>
+
+      <div class="ctrl-group">
+        <div class="ctrl-top">
+          <div class="ctrl-name">Sprint velocity</div>
+          <div class="ctrl-readout" id="ctrl-velocity">+6 pts/mo</div>
+        </div>
+        <input type="range" id="slider-velocity" min="2" max="14" value="6" step="1">
+        <div class="ctrl-desc">Change the rate of adoption improvement to show the impact of intervention campaigns</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROJECTION -->
+  <div class="projection-card">
+    <div class="proj-header">
+      <div class="proj-title">Projected adoption at engagement close</div>
+    </div>
+
+    <div class="proj-big">
+      <div class="proj-num" id="proj-num">~84%</div>
+      <div class="proj-vs">vs. target <span id="proj-target-inline">85%</span></div>
+      <div class="proj-gap-chip" id="proj-gap-chip">−1 pt gap</div>
+    </div>
+
+    <div class="proj-gauge-wrap">
+      <div class="proj-gauge-bg">
+        <div class="proj-gauge-fill" id="proj-gauge-fill" style="width:84%;background:var(--blue);"></div>
+      </div>
+      <div class="proj-target-line" id="proj-target-line" style="left:85%;" data-label="Target: 85%"></div>
+    </div>
+    <div class="proj-scale">
+      <span>0%</span>
+      <span>25%</span>
+      <span>50%</span>
+      <span>75%</span>
+      <span>100%</span>
+    </div>
+
+    <div class="proj-insight" id="proj-insight" style="border-color:var(--amber);">
+      At current velocity (+6 pts/mo), projected close score of ~84% falls 1 pt short of the 85% target.
+      Modest acceleration through focused enablement on Leadership and Employee workstreams would close this gap.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div><span class="footer-brand">HCM Insights</span> &nbsp;·&nbsp; Workday HCM Adoption Dashboard &nbsp;·&nbsp; Confidential</div>
+    <div id="footer-timestamp">Sample data · Active implementation · Week 8 of 14</div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL_WEEKS = 14;
+
+  // Scores at each week (all 4 roles, blended = rough avg for display)
+  const scoreData = {
+    hr: [52,60,66,71,75,79,82,85,87,89,91,93,95,96],
+    ld: [38,44,48,52,55,58,61,64,67,69,71,73,75,77],
+    mg: [50,55,59,63,67,70,73,77,79,81,83,85,87,88],
+    em: [36,41,45,49,53,57,60,64,67,70,73,76,78,80],
+  };
+  const overallAtWeek = w => Math.round(
+    (scoreData.hr[w-1] + scoreData.ld[w-1] + scoreData.mg[w-1] + scoreData.em[w-1]) / 4
+  );
+
+  const roleTargets = { hr: 90, ld: 80, mg: 85, em: 80 };
+
+  const phases = [
+    { label:'Discovery',  weeks:[1,2]  },
+    { label:'Config',     weeks:[3,4,5]},
+    { label:'Testing',    weeks:[6,7,8]},
+    { label:'Training',   weeks:[9,10] },
+    { label:'UAT',        weeks:[11,12]},
+    { label:'Stabilise',  weeks:[13,14]},
+  ];
+
+  function currentPhase(w) {
+    for (const p of phases) if (p.weeks.includes(w)) return p.label;
+    return 'Active';
+  }
+
+  function getStatus(proj, target) {
+    const gap = proj - target;
+    if (gap >= 0)  return { text:'On target',  bg:'rgba(29,158,117,0.15)',  border:'#1D9E75', color:'#1D9E75' };
+    if (gap >= -3) return { text:'On watch',   bg:'rgba(239,159,39,0.15)', border:'#EF9F27', color:'#EF9F27' };
+    return               { text:'At risk',    bg:'rgba(216,90,48,0.15)',  border:'#D85A30', color:'#D85A30' };
+  }
+
+  function getGaugeColor(proj, target) {
+    const gap = proj - target;
+    if (gap >= 0)  return '#1D9E75';
+    if (gap >= -3) return '#0066CC';
+    return '#D85A30';
+  }
+
+  function getRoleGapText(score, target) {
+    const diff = score - target;
+    if (diff >= 0)  return { text:`↑ ${diff} pts ahead`,  color:'#1D9E75' };
+    if (diff >= -5) return { text:`↓ ${Math.abs(diff)} pts to target`, color:'#EF9F27' };
+    return               { text:`↓ ${Math.abs(diff)} pts to target`, color:'#D85A30' };
+  }
+
+  function getInsight(proj, target, velocity, weeksLeft) {
+    const gap = proj - target;
+    if (gap >= 5)  return `At +${velocity} pts/mo velocity, the projected close score of ~${proj}% comfortably exceeds the ${target}% target by ${gap} pts. Current interventions are working — maintain cadence.`;
+    if (gap >= 0)  return `At +${velocity} pts/mo velocity, projected close score of ~${proj}% meets the ${target}% target. ${weeksLeft} weeks remain — stay the course and monitor Leadership and Employee workstreams closely.`;
+    if (gap >= -3) return `At current velocity (+${velocity} pts/mo), projected close score of ~${proj}% falls ${Math.abs(gap)} pt${Math.abs(gap)!==1?'s':''} short of the ${target}% target. Modest acceleration through focused enablement on Leadership and Employee workstreams would close this gap.`;
+    if (gap >= -8) return `Projected close score of ~${proj}% is ${Math.abs(gap)} pts below the ${target}% target. With ${weeksLeft} weeks remaining, increasing sprint velocity to ${velocity+3}+ pts/mo through targeted campaigns is needed to recover.`;
+    return `A ${Math.abs(gap)}-pt gap at current velocity signals structural adoption barriers beyond training. Consider re-scoping the target or escalating resource allocation — at +${velocity} pts/mo the gap will not close in ${weeksLeft} weeks.`;
+  }
+
+  function update() {
+    const week     = parseInt(document.getElementById('slider-week').value);
+    const target   = parseInt(document.getElementById('slider-target').value);
+    const velocity = parseInt(document.getElementById('slider-velocity').value);
+
+    const elapsed     = Math.round((week / TOTAL_WEEKS) * 100);
+    const weeksLeft   = TOTAL_WEEKS - week;
+    const hrScore     = scoreData.hr[week-1];
+    const ldScore     = scoreData.ld[week-1];
+    const mgScore     = scoreData.mg[week-1];
+    const emScore     = scoreData.em[week-1];
+    const overall     = overallAtWeek(week);
+    const projScore   = Math.min(99, Math.round(overall + weeksLeft * (velocity / 4.3)));
+    const gap         = projScore - target;
+    const status      = getStatus(projScore, target);
+    const phase       = currentPhase(week);
+
+    // header
+    document.getElementById('header-meta').textContent =
+      `Acme Corp · Week ${week} of ${TOTAL_WEEKS} · ${elapsed}% elapsed · Updated live`;
+    document.getElementById('today-label').textContent = `Today · Week ${week}`;
+
+    // status pill
+    const pill = document.getElementById('status-pill');
+    pill.textContent = status.text;
+    pill.style.background = status.bg;
+    pill.style.borderColor = status.border;
+    pill.style.color = status.color;
+
+    // progress meta
+    document.getElementById('elapsed-label').textContent      = `${elapsed}% elapsed`;
+    document.getElementById('weeks-remaining-label').textContent = `${weeksLeft} week${weeksLeft!==1?'s':''} remaining`;
+    document.getElementById('phase-label').textContent        = phase + ' phase';
+
+    // track fills
+    document.getElementById('track-el').style.width    = elapsed + '%';
+    document.getElementById('track-adopt').style.width = elapsed + '%';
+    const projPct = Math.min(projScore, 100);
+    document.getElementById('track-proj').style.width  = projPct + '%';
+
+    // today pin
+    const pin = document.getElementById('today-pin');
+    pin.style.left = elapsed + '%';
+    pin.dataset.label = `Wk ${week}`;
+
+    // phase segments
+    const segs = document.querySelectorAll('.phase-seg');
+    const pastWeeks = week;
+    segs.forEach((seg, i) => {
+      const phaseWeeks = phases[i].weeks;
+      const maxWeek    = Math.max(...phaseWeeks);
+      seg.classList.toggle('past',   maxWeek <= pastWeeks);
+      seg.classList.toggle('future', maxWeek > pastWeeks);
+    });
+
+    // stats
+    document.getElementById('s-adoption').textContent  = overall + '%';
+    document.getElementById('s-velocity').textContent  = '+' + velocity + ' pts';
+    document.getElementById('ctrl-week').textContent     = 'Week ' + week;
+    document.getElementById('ctrl-target').textContent   = target + '%';
+    document.getElementById('ctrl-velocity').textContent = '+' + velocity + ' pts/mo';
+    document.getElementById('slider-week').value      = week;
+    document.getElementById('slider-target').value    = target;
+    document.getElementById('slider-velocity').value  = velocity;
+
+    // role cards
+    const roles = [
+      { id:'hr', score:hrScore, color:'var(--blue)',   target: roleTargets.hr },
+      { id:'ld', score:ldScore, color:'var(--purple)', target: roleTargets.ld },
+      { id:'mg', score:mgScore, color:'var(--teal)',   target: roleTargets.mg },
+      { id:'em', score:emScore, color:'var(--amber)',  target: roleTargets.em },
+    ];
+    roles.forEach(r => {
+      document.getElementById(r.id+'-score').textContent = r.score + '%';
+      document.getElementById(r.id+'-bar').style.width   = r.score + '%';
+      document.getElementById(r.id+'-target').style.left = r.target + '%';
+      const gapInfo = getRoleGapText(r.score, r.target);
+      document.getElementById(r.id+'-gap').textContent   = gapInfo.text;
+      document.getElementById(r.id+'-gap').style.color   = gapInfo.color;
+    });
+
+    // projection
+    const gapText = gap >= 0
+      ? `+${gap} pt${Math.abs(gap)!==1?'s':''} ahead`
+      : `−${Math.abs(gap)} pt${Math.abs(gap)!==1?'s':''} gap`;
+    const chipColor = getGaugeColor(projScore, target);
+    const gaugeColor = getGaugeColor(projScore, target);
+
+    document.getElementById('proj-num').textContent          = '~' + projScore + '%';
+    document.getElementById('proj-num').style.color          = gaugeColor;
+    document.getElementById('proj-target-inline').textContent = target + '%';
+    document.getElementById('proj-gap-chip').textContent     = gapText;
+    document.getElementById('proj-gap-chip').style.color     = chipColor;
+    document.getElementById('proj-gap-chip').style.borderColor = chipColor;
+    document.getElementById('proj-gap-chip').style.background = chipColor + '18';
+    document.getElementById('proj-gauge-fill').style.width   = projScore + '%';
+    document.getElementById('proj-gauge-fill').style.background = gaugeColor;
+    document.getElementById('proj-target-line').style.left   = target + '%';
+    document.getElementById('proj-target-line').dataset.label = 'Target: ' + target + '%';
+    document.getElementById('proj-insight').textContent      = getInsight(projScore, target, velocity, weeksLeft);
+    document.getElementById('proj-insight').style.borderColor = chipColor;
+
+    document.getElementById('footer-timestamp').textContent =
+      `Sample data · Week ${week} of ${TOTAL_WEEKS} · ${weeksLeft} weeks remaining`;
+  }
+
+  document.getElementById('slider-week').addEventListener('input', update);
+  document.getElementById('slider-target').addEventListener('input', update);
+  document.getElementById('slider-velocity').addEventListener('input', update);
+
+  update();
+</script>
+</body>
+</html>
