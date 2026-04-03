@@ -48,6 +48,8 @@
   .card-desc{font-size:11px;color:var(--text-light);font-weight:300;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .card .vid-dur{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.7);padding:2px 8px;border-radius:4px;font-size:10px;color:#fff}
   .card .file-badge{position:absolute;top:6px;right:6px;background:var(--accent);padding:2px 8px;border-radius:4px;font-size:9px;color:#fff;font-weight:600;letter-spacing:.5px}
+  .card .file-badge.badge-url{background:#2e7d4f}
+  .card .file-badge.badge-html{background:#7b3fa0}
   .thumb-method{background:linear-gradient(135deg,#e8f0fe,#d4e4f7)}
   .thumb-comms{background:linear-gradient(135deg,#e0f2fe,#bae0fd)}
   .thumb-training{background:linear-gradient(135deg,#ede9fe,#ddd6fe)}
@@ -125,9 +127,9 @@
 
 <nav>
   <a href="#" class="logo">
-    <img src="images/Original_Blue_on_Transparent.jpg" alt="KSI Consulting" style="width: 180px; height: auto;">;display:block;">
+    <img src="images/Original_Blue_on_Transparent.jpg" alt="KSI Consulting" style="width:180px;height:auto;display:block;">
     <div class="logo-sub">KSI Resource Center</div>
-</a>
+  </a>
   <div class="nav-links">
     <a href="#methodology" class="active">Our Methodology</a>
     <a href="#comms">Communications</a>
@@ -227,8 +229,7 @@
 
 <script>
 const BASE_URL = 'https://jmurrayksi.github.io/ksi-reource-center';
-
-const pdfUrl  = (filename) => `${BASE_URL}/docs/${filename}`;
+const pdfUrl   = (filename) => `${BASE_URL}/docs/${filename}`;
 const videoUrl = (filename) => `${BASE_URL}/videos/${filename}`;
 
 // ========== PAGINATED CONTENT HELPER ==========
@@ -306,78 +307,81 @@ function buildVideoEmbed(item) {
 }
 
 // ========== DATA ==========
+
+// --- OUR METHODOLOGY ---
 const methodData = [
   {id:'m1',cat:'overview',tag:'Overview',title:'Enabling Workday Transformation',desc:'Our proven end-to-end methodology for delivering successful transformations.',
     embedPdf: pdfUrl('enabling-workday-transformation.pdf'),
     content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — METHODOLOGY</div><h4>Enabling Workday Transformation</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Five Core Phases:</strong></p><p><strong>1. Assess & Discover</strong> — Evaluate current state, identify gaps, stakeholder interviews, process mapping.</p><p><strong>2. Strategy & Design</strong> — Future-state vision, operating model, technology roadmap, success metrics.</p><p><strong>3. Plan & Prepare</strong> — Project plans, governance, communications, change management roadmaps.</p><p><strong>4. Execute & Deliver</strong> — Disciplined program management, testing, training, go-live readiness.</p><p><strong>5. Optimize & Sustain</strong> — Hypercare, adoption measurement, process refinement, value realization.</p></div>`},
-  {id:'m2',cat:'strategy',tag:'Strategy',title:'KSI Change Strategy and Delivery Overview',desc:'Aligning technology, process, and organizational change with business goals.',
-    embedPdf: pdfUrl('ocm-strategy-and-delivery.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — STRATEGY</div><h4>KSI Change Strategy and Delivery Overview</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>🎯 Business Alignment</strong> — Anchored to measurable business outcomes.</p><p><strong>⚙️ Operating Model</strong> — Service delivery, COEs, shared services redesign.</p><p><strong>💻 Technology Roadmap</strong> — Vendor-agnostic, independent evaluation.</p><p><strong>👥 Change Readiness</strong> — Integrated from day one.</p></div>`},
- {id:'m3',cat:'dashboards',tag:'DASHBOARDS',title:'Stakeholder Assessment',desc:'Map all relevant audiences to end user requirements.',
+  {id:'m2',cat:'overview',tag:'Overview',title:'Change Approach',desc:'KSI\'s data-driven Change Management strategy, delivery, and assessments overview.',
+    embedPdf: pdfUrl('OCM Strat and Assmt.pdf')},
+  {id:'m3',cat:'dashboards',tag:'Dashboards',title:'Stakeholder Assessment',desc:'Map all relevant audiences to end user requirements.',
     externalUrl:'https://ksiconsults.clicdata.com/v/xoH3M7LGwjEH'},
-  {id:'m4',cat:'plans',tag:'Plans',title:'Program Implementation Plan',desc:'Phased implementation plan with milestones and deliverables.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — PLANS</div><h4>Program Implementation Plan</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Phase 1: Initiate (Wk 1–4)</strong> — Charter, governance, kickoff.</p><p><strong>Phase 2: Design (Wk 5–20)</strong> — Workshops, configuration, integrations.</p><p><strong>Phase 3: Test (Wk 21–36)</strong> — SIT, UAT, migration, training.</p><p><strong>Phase 4: Deploy (Wk 37–48)</strong> — Go-live, hypercare, optimization.</p></div>`},
-  {id:'m5',cat:'plans',tag:'Plans',title:'Change Management & Comms Plan',desc:'Managing organizational change, engagement, and communications.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — PLANS</div><h4>Change Management & Communications Plan</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>🔍 Stakeholder Analysis</strong> — Impact, influence, and readiness mapping.</p><p><strong>📢 Communications</strong> — Exec messages, newsletters, campaigns, manager toolkits.</p><p><strong>🤝 Champion Network</strong> — 40–60 champions with briefings and recognition.</p><p><strong>📊 Adoption Metrics</strong> — Login rates, training completion, help desk volumes.</p></div>`},
-  {id:'m6',cat:'dashboards',tag:'Dashboards',title:'Executive Program Dashboard',desc:'Real-time program health, milestones, risks, and decisions.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — DASHBOARD</div><h4>Executive Program Dashboard</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p style="text-align:center"><strong>Program: 🟢 &nbsp;|&nbsp; Budget: 🟢 &nbsp;|&nbsp; Timeline: 🟡</strong></p><p>✅ Kickoff ✅ Design ✅ Config 🔄 UAT (78%) ⬜ Training ⬜ Go-Live</p><p>UAT: 245/312 | Defects: 2 | Training: 83.6% | Readiness: 4.1/5.0</p></div>`},
-  {id:'m7',cat:'dashboards',tag:'Dashboards',title:'Change Adoption Dashboard',desc:'Training completion, communications reach, and employee sentiment.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — DASHBOARD</div><h4>Change Adoption Dashboard</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p style="text-align:center"><strong>Adoption Health: 🟢 Strong</strong></p><p>eLearning: 88% | Manager ILT: 76% | HR Admin: 100% ✅</p><p>Email open: 72% | Intranet: 3,420 views | Town hall: 68%</p><p>Sentiment — Understand: 4.2 | Prepared: 3.8 | Help: 4.4</p></div>`}
+  {id:'m4',cat:'dashboards',tag:'Dashboards',title:'Change Impact Assessment',desc:'Degree of change mapped to each process and audience.',
+    externalUrl:'https://ksiconsults.clicdata.com/v/7DnhnnLUsefJ'},
+  {id:'m5',cat:'plans',tag:'Plans',title:'Change Impact Action Items',desc:'Detailed list of follow up actions to enable successful change transition.',
+    externalUrl:'https://ksiconsults.clicdata.com/v/7DnhnnLUsefJ'},
+  {id:'m6',cat:'plans',tag:'Plans',title:'Workday Change Timelines',desc:'Sample timelines illustrating change activities within Workday implementation plans.',
+    embedPdf: pdfUrl('Change Timelines.pdf')},
+  {id:'m7',cat:'strategy',tag:'Strategy',title:'Change Strategy Report — Global multi-BU integration',desc:'Sample Change Strategy report for Workday implementation across global regions and business units.',
+    embedPdf: pdfUrl('Blueprint Sample 3.pdf')},
+  {id:'m8',cat:'strategy',tag:'Strategy',title:'Change Strategy Report — Global',desc:'Sample Change Strategy report detailing the Workday opportunities, issues, risks and interventions to enable successful change.',
+    embedPdf: pdfUrl('Blueprint Sample 1.pdf')},
+  {id:'m9',cat:'dashboards',tag:'Dashboards',title:'Workday Adoption Metrics Report',desc:'Sample bi-weekly report summarizing adoption metrics across multiple audiences.',
+    embedPdf: pdfUrl('Model WD Adoption Metrics.pdf')},
+  {id:'m10',cat:'dashboards',tag:'Dashboards',title:'Workday Adoption Progress Monitor',desc:'Online dashboard to track user adoption before and after go live.',
+    externalUrl:'https://jmurrayksi.github.io/ksi-reource-center/tools/HCM_Adoption_Progress.html'}
 ];
 
+// --- COMMUNICATIONS ---
 const commsData = [
   {id:'c1',cat:'employees',tag:'Employees',title:'HR as Change Agent',desc:'How HR drives transformation as a strategic change agent across the organization.',
-    embedPdf: pdfUrl('hr-as-change-agent.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR as Change Agent</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This document explores how HR professionals can serve as strategic change agents during transformation initiatives.</p></div>`},
+    embedPdf: pdfUrl('hr-as-change-agent.pdf')},
   {id:'c2',cat:'employees',tag:'Employees',title:'Workday Intro for Business Leaders',desc:'Executive-level introduction to Workday and key capabilities for business leaders.',
-    embedPdf: pdfUrl('workday-intro-for-leaders.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Workday Intro for Business Leaders</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>An executive overview of the Workday platform and its strategic value for business leaders.</p></div>`},
+    embedPdf: pdfUrl('workday-intro-for-leaders.pdf')},
   {id:'c3',cat:'employees',tag:'Employees',title:'HR Talking Points for Workday',desc:'Key talking points for HR teams to communicate Workday changes effectively.',
-    embedPdf: pdfUrl('hr-talking-points.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR Talking Points for Workday</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>Prepared talking points to help HR teams address common questions about the Workday transition.</p></div>`},
-  {id:'c4',cat:'managers',tag:'Managers',title:'Manager Change Champion Toolkit',desc:'Resource kit for managers to drive team adoption.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Manager Change Champion Toolkit</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Responsibilities:</strong> Attend briefings, share updates, encourage training, gather feedback.</p><p><strong>Talking Points:</strong> Training available, simpler time-off, go-live on track, multi-channel support.</p></div>`},
-  {id:'c5',cat:'managers',tag:'Managers',title:'Manager Pre-Go-Live Actions',desc:'Specific actions required from managers before launch.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Manager Pre-Go-Live Actions</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>☑ Complete manager training<br>☑ Verify team roster<br>☑ Set up approval delegation<br>☑ Communicate with team<br>☑ Minimize meetings go-live week</p></div>`},
-  {id:'c6',cat:'hr',tag:'HR',title:'HR Team Readiness Checklist',desc:'HR team preparation for cutover and post-launch support.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR Team Readiness</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Training:</strong> Complete admin modules, pass certification 85%+<br><strong>Data:</strong> Validate migration, confirm configs, test security<br><strong>Support:</strong> Review hypercare schedule, escalation process</p></div>`},
-  {id:'c7',cat:'hr',tag:'HR',title:'HR Process Transition Guide',desc:'How daily HR processes change in the new system.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>HR Process Transition</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Onboarding:</strong> Paper → digital workflow<br><strong>Data Changes:</strong> Manual → employee self-service<br><strong>Reporting:</strong> Excel pulls → real-time dashboards<br><strong>Benefits:</strong> Paper enrollment → online with auto-eligibility</p></div>`},
-  {id:'c8',cat:'leadership',tag:'Leadership',title:'Steering Committee Status Update',desc:'Executive-level project status report.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Steering Committee Status</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Status: 🟢 On Track</strong></p><p>UAT 94% pass rate. Change management ramping for go-live.</p><p><strong>Decision Needed:</strong> Approve production cutover.</p></div>`},
-  {id:'c9',cat:'leadership',tag:'Leadership',title:'Business Case Executive Summary',desc:'Business case for leadership investment approval.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — SAMPLE COMMUNICATION</div><h4>Business Case</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p><strong>Benefits (3-Year):</strong> $2.4M gains, 40% processing reduction, 90%+ self-service</p><p><strong>Investment:</strong> $1.8M + $420K/yr &nbsp;|&nbsp; <strong>Payback:</strong> 22 months</p></div>`}
+    embedPdf: pdfUrl('hr-talking-points.pdf')},
+  {id:'c4',cat:'managers',tag:'Managers',title:'Recruiting and Onboarding for Managers',desc:'Introduction to new Recruiting and Onboarding practices, tailored to manager tasks.',
+    embedPdf: pdfUrl('Manager Recruiting and Onboarding.pdf')},
+  {id:'c5',cat:'employees',tag:'Employees',title:'Payroll Changes — Employees',desc:'Highlighting upcoming payroll changes for U.S. employees.',
+    embedPdf: pdfUrl('EE- US Payroll Change.pdf')},
+  {id:'c6',cat:'all',tag:'All',title:'Infographic — Mapping the Employee Journey',desc:'Infographic to provide context for Workday process changes.',
+    embedPdf: pdfUrl('Infog Mapping EE Journey.pdf')},
+  {id:'c7',cat:'all',tag:'All',title:'Persona Definitions',desc:'Personas described according to role and anticipated Workday tasks.',
+    embedPdf: pdfUrl('personas_redesign.pdf')},
+  {id:'c8',cat:'all',tag:'All',title:'More Communication Samples',desc:'List of common Workday topics with attached sample messages to be customized to your needs.',
+    externalUrl:'https://app.smartsheet.com/b/publish?EQBCT=66db833eb63d45c1a7b8a53d9ca0b406'},
+  {id:'c9',cat:'leadership',tag:'Leadership',title:'Excerpt — Communication Strategy',desc:'Excerpt example highlighting KSI\'s approach to developing and enabling effective communication strategies to drive adoption.',
+    embedPdf: pdfUrl('Comm Strategy Sample.pdf')},
+  {id:'c10',cat:'all',tag:'All',title:'Communication Plan',desc:'Sample schedule of project communications by audience, topic, and date.',
+    externalUrl:'https://app.smartsheet.com/b/publish?EQBCT=ac4571bf1cab40c7b12f2c649c341269'},
+  {id:'c11',cat:'all',tag:'All',title:'Communication Plan Dashboard',desc:'Online real-time dashboard to track and report communication progress within the plan.',
+    externalUrl:'https://ksiconsults.clicdata.com/v/QfhnDGoZAosZ'},
+  {id:'c12',cat:'all',tag:'All',title:'Communication Statistics Dash',desc:'Measure communication effectiveness and adjust channels and frequency over the course of the project to drive understanding and adoption.',
+    externalUrl:'https://ksiconsults.clicdata.com/v/p4p3bPc78tcm'}
 ];
 
-const hireAssocPages = [
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">OVERVIEW</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p>This guide provides an overview of the steps involved in hiring an employee. This includes two scenarios:</p><p>• <strong>Section A:</strong> Hire through Recruiting Process<br>• <strong>Section B:</strong> Ad-hoc Hires</p><p>The Hire step in the recruiting process is redirected to HRSS once Recruiting Coordinators have indicated that the candidate successfully cleared the background check and are marked "Ready for Hire".</p><p>The Ad-hoc Hire process will be used for international hires until Phase 2 in the summer of 2023 when the Workday Recruiting module goes live for International. In North America, this process will be used for the exceptional cases where the hiring is done outside the recruiting process.</p><p>An open position must be created prior to the ad-hoc hire.</p><p style="margin-top:16px"><strong>Editing Form Fields</strong></p><p>• The <strong>Prompt icon</strong> inside a field lets you choose a value from the available options. You can also start typing the value and press enter to view related search results.<br>• A <strong>red asterisk</strong> next to a field indicates the field is Mandatory and must be filled to submit a form.</p>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION A: HIRE THROUGH RECRUITING PROCESS</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p><strong>Step 1: Initiating the Task</strong></p><p>Click the <strong>Inbox</strong> icon at the top-right corner of the Home page and locate the task title <em>Hire: [Candidate Name] – [Position]</em>. Click on the task to view the Revise Employee Hire task details.</p><p>Most of the information will be populated from the job requisition. Cross check the details to ensure completeness and accuracy.</p><p>Prior to completing this task, check again for duplicate records in Workday and in external information files from legacy systems. Update prehire information such as legal name.</p><p style="margin-top:12px"><strong>Complete the Additional Information section:</strong></p><table><tr><th style="width:30%">Field</th><th>Key Considerations</th></tr><tr><td><strong>Business Title</strong></td><td>Edit if the Business Title needs to be different from the Job Title.</td></tr><tr><td><strong>Additional Job Classifications</strong></td><td>Select applicable type if part of Sales organization OR appropriate EEO category for US reporting.</td></tr><tr><td><strong>Company Insider Types</strong></td><td>Will default from Job Profile and should not be changed.</td></tr><tr><td><strong>Workers' Comp Code Override</strong></td><td>Defaults from Job Profile — don't edit; issues corrected by HRIS at job profile level.</td></tr></table>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION A: ADDITIONAL FIELDS & SUBSEQUENT TASKS</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><table><tr><th style="width:30%">Field</th><th>Key Considerations</th></tr><tr><td><strong>First Day of Work</strong></td><td>The New Hire's actual start date. Defaults to Hire Date but can be updated with the Calendar icon.</td></tr><tr><td><strong>Continuous Service Date</strong></td><td>Defaults to Hire Date. Adjust if it should be bridged to include a previous period of employment. Used for service awards, vacation, and benefits.</td></tr><tr><td><strong>End Employment Date</strong></td><td>Select for employee types with a fixed end date.</td></tr><tr><td><strong>Benefits Service Date</strong></td><td>Leave blank unless new hire is not immediately eligible; enter the date eligibility starts.</td></tr><tr><td><strong>Company Service Date</strong></td><td>Should reflect date of hire/transfer into a new legal entity.</td></tr></table><p>Click <strong>Submit</strong> when finished. This kicks off sequential tasks for HRSS:</p><p>• <strong>Propose Compensation Hire</strong> — check plan assignments, add/edit as needed<br>• <strong>Change Organization Assignments</strong> — check cost center and custom org assignments<br>• <strong>Change Personal Information</strong> — make generic entries for required fields by country<br>• <strong>Edit Government IDs</strong> — ensure national ID captured for all countries<br>• <strong>Edit Service Dates</strong> — check continuous service date (internal hire) and company service date (transfer/rehire)</p><p style="padding:10px;background:#e8f4fd;border-radius:6px;color:#1a5276;font-size:12px"><strong>🇨🇦 Canada Hires:</strong> Employment Equity Act requires HRSS to enter: Gender – "Not Declared", Visible Minority – "Decline to answer", Aboriginal/Indigenous – "Decline to answer", Disability – "Decline to answer". The associate updates these through their onboarding tasks.</p>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION A: ADDITIONAL TASKS</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p><strong>Additional HRSS Tasks (continued):</strong></p><p>• <strong>Manage Union Membership</strong> — For Nemschoff hourly hires only; contact local HRBP to confirm details<br>• <strong>Request One-Time Payment</strong> — Add applicable sign-on bonus or relocation bonus if agreed at time of offer<br>• <strong>Request One-Time Payment for Referral</strong> — Add payment for the current employee who referred the candidate</p><p style="margin-top:16px"><strong>Tasks Assigned to Other Roles:</strong></p><p>• <strong>Payroll</strong> receives a task to <em>Assign Pay Group</em><br>• <strong>HRBPs</strong> receive <em>Manage Employee Contracts</em> if the candidate is hired into a fixed-term position<br>• <strong>HRBPs</strong> receive <em>Add Probation Period</em> for Nemschoff in the US and other countries with Unions</p><p style="padding:10px;background:#d1fae5;border-radius:6px;color:#065f46;font-size:12px;margin-top:16px"><strong>✅ What Happens Next:</strong> Once all the above tasks are completed, the Onboarding tasks for the Manager and the new hire will be kicked off.</p>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION B: AD-HOC HIRE</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p><strong>Step 1: Initiating the Task</strong></p><p>Type <strong>"Hire Employee"</strong> in the Search bar and press Enter. Click on the Hire Employee task in the Search results.</p><p style="margin-top:16px"><strong>Step 2: Enter Supervisory Org and Hire Details</strong></p><table><tr><th style="width:30%">Field</th><th>Key Considerations</th></tr><tr><td><strong>Supervisory Organization*</strong></td><td>Click the Prompt icon and select the Supervisory Organization for the requisition.</td></tr><tr><td><strong>Type of Hire</strong></td><td>Select one:<br>• <strong>Existing Pre-Hire</strong> – Re-hire an individual already in Workday. Use partial name search if needed (first 3 letters).<br>• <strong>New Pre-Hire</strong> – Hire someone not previously employed or not found in existing records.</td></tr></table><p>Click <strong>OK</strong> to continue.</p>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION B: STEP 3 — CREATE PRE-HIRE</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p>If you selected <strong>New Pre-Hire</strong>, complete the following fields. Skip to Step 4 if you chose "Existing Pre-Hire".</p><table><tr><th style="width:25%">Field</th><th>Key Considerations</th></tr><tr><td><strong>Source</strong></td><td>Select the source for this hire.</td></tr><tr><td><strong>Referred By</strong></td><td>Select the employee(s) who referred the hire, if applicable.</td></tr><tr><td><strong>Comment</strong></td><td>Enter a brief comment about the hire.</td></tr><tr><td><strong>Allow Duplicate Name</strong></td><td>Check to allow a duplicate name in the system.</td></tr></table><p style="margin-top:14px"><strong>Legal Name Information:</strong></p><table><tr><th style="width:25%">Field</th><th>Key Considerations</th></tr><tr><td><strong>Country*</strong></td><td>Defaults to your current country. Use Prompt icon to change.</td></tr><tr><td><strong>First Name*</strong></td><td>Enter pre-hire's legal first name.</td></tr><tr><td><strong>Middle Name</strong></td><td>Enter legal middle name.</td></tr><tr><td><strong>Last Name*</strong></td><td>Enter pre-hire's legal last name.</td></tr></table>`,
-  `<div class="doc-logo">KSI CONSULTING — TRAINING SAMPLE</div><h4>Hire an Associate</h4><p style="font-size:15px;font-weight:600;color:#1a2332;margin-bottom:6px">SECTION B: CONTACT INFORMATION & JOB DETAILS</p><hr style="margin:10px 0;border:none;border-top:1px solid #ddd"><p><strong>Contact Information:</strong> Click Add to enter phone, address, or email. Email is always required so they receive pre-hire Workday access. For rehires, change to personal email if reflecting prior work email.</p><table><tr><th style="width:20%">Type</th><th>Details</th></tr><tr><td><strong>Phone*</strong></td><td>Device type, country code, number, extension, Work/Home</td></tr><tr><td><strong>Address*</strong></td><td>Country, street, city, state, postal code, county, Work/Home</td></tr><tr><td><strong>Email*</strong></td><td>Email address, Work/Home type</td></tr></table><p style="margin-top:14px"><strong>Step 4: Enter Job Details</strong></p><table><tr><th style="width:25%">Field</th><th>Key Considerations</th></tr><tr><td><strong>Hire Date*</strong></td><td>Select with the Calendar icon.</td></tr><tr><td><strong>Reason</strong></td><td>Select the reason for the hire.</td></tr><tr><td><strong>Position*</strong></td><td>Select the position. Other fields auto-populate.</td></tr><tr><td><strong>Business Title</strong></td><td>Change to match the offer letter.</td></tr><tr><td><strong>Scheduled Weekly Hours</strong></td><td>Used to calculate FTE. Defaults to location standard.</td></tr><tr><td><strong>First Day of Work</strong></td><td>Actual start date. Defaults to Hire Date.</td></tr><tr><td><strong>Continuous Service Date</strong></td><td>Confirm if rehire; compute and enter bridged date.</td></tr></table><p>Click <strong>Submit</strong>. This triggers the same sequential HRSS tasks as Section A: Propose Compensation, Change Org Assignments, Change Personal Info, Edit Government IDs, and Request One-Time Payments.</p>`
-];
-
+// --- TRAINING ---
 const trainingData = [
-  {id:'t1',cat:'hr',tag:'HR',title:'Basic Navigation for Employees',desc:'Complete guide for basic navigation in Workday for new employees.',
-    embedPdf: pdfUrl('employee-basic-navigation.pdf'),
-    pages: hireAssocPages},
-  {id:'t2',cat:'employees',tag:'Employees',title:'Workday Position Management',desc:'Guide to managing positions and organizational structures in Workday.',
-    embedPdf: pdfUrl('workday-position-management.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Workday Position Management</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This guide covers position creation, editing, and management within Workday.</p></div>`},
-  {id:'t3',cat:'employees',tag:'Employees',title:'Absence & Time Off Training Course',desc:'Training course covering absence management and time-off requests in Workday.',
-    embedPdf: pdfUrl('absence-training-course.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Absence & Time Off Training Course</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This course covers requesting time off, viewing balances, and managing absences in Workday.</p></div>`},
-  {id:'t4',cat:'managers',tag:'Managers',title:'Help Article - Additional Job Classification',desc:'Reference article for configuring additional job classifications in Workday.',
-    embedPdf: pdfUrl('article-additional-job-classification-hr.pdf'),
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Help Article - Additional Job Classification</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>This help article explains how to add and manage additional job classifications for HR reporting.</p></div>`},
-  {id:'t5',cat:'managers',tag:'Managers',title:'People Analytics Dashboard',desc:'Workforce analytics dashboards for data-driven decisions.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>People Analytics Dashboard</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>📊 Headcount &nbsp; 📈 Turnover &nbsp; ⏱ Absence &nbsp; 🎯 Performance</p><p>Filter by department, location, level, time. Export to Excel/PDF.</p></div>`},
-  {id:'t6',cat:'leadership',tag:'Leadership',title:'Executive Sponsor Briefing Guide',desc:'Executive sponsor role and engagement expectations.',
-    content:`<div class="doc-preview"><div class="doc-logo">KSI CONSULTING — TRAINING</div><h4>Executive Sponsor Briefing</h4><hr style="margin:14px 0;border:none;border-top:1px solid #ddd"><p>Active sponsorship is the #1 predictor of successful change.</p><p>Champion vision, attend steering committee, remove barriers, communicate, model adoption.</p></div>`}
+  {id:'t1',cat:'hr',tag:'HR',title:'Overview — Position Management',desc:'Guide to managing position and organizational structures in Workday.',
+    embedPdf: pdfUrl('workday-position-management.pdf')},
+  {id:'t2',cat:'hr',tag:'HR',title:'Instructions — Additional Job Classification',desc:'Help Article for enabling additional job classifications in Workday.',
+    embedPdf: pdfUrl('article-additional-job-classification-hr.pdf')},
+  {id:'t3',cat:'employees',tag:'Employees',title:'Instructions — Basic Workday Navigation',desc:'Complete guide for basic navigation from the Workday home screen.',
+    embedPdf: pdfUrl('employee-basic-navigation.pdf')},
+  {id:'t4',cat:'managers',tag:'Managers',title:'Instructions — Change Job',desc:'Help Articles for manager task in Change Job process.',
+    embedPdf: pdfUrl('Mgr Change Job.pdf')},
+  {id:'t5',cat:'hr',tag:'HR',title:'Course — Time Off & Absence',desc:'Training course to highlight basic Workday navigation and tasks.',
+    embedPdf: pdfUrl('absence-training-course.pdf')},
+  {id:'t6',cat:'employees',tag:'Employees',title:'Course — Introduction to Workday',desc:'Training course to highlight basic Workday navigation and tasks.',
+    embedPdf: pdfUrl('EE Intro to Workday generic.pdf')},
+  {id:'t7',cat:'managers',tag:'Managers',title:'Course — Review and Approve Time Off',desc:'Manager course for conducting time entries and LOA approvals.',
+    embedPdf: pdfUrl('Mgr Review and Approve Time Off.pdf')},
+  {id:'t8',cat:'all',tag:'All',title:'KSI Help Article & Training Course Sample Library',desc:'Sample instructions and training courses across multiple audiences.',
+    externalUrl:'https://app.smartsheet.com/b/publish?EQBCT=1f6a637948f24723b999b0da581a65d3'}
 ];
 
+// --- VIDEOS (unchanged) ---
 const videosData = [
   {id:'v1',cat:'instructions',tag:'Instructions',title:'Create a Job Requisition - Managers',desc:'Video walkthrough demonstrating how to create a job requisition in the system.',duration:'Video',
     videoSrc: videoUrl('create-job-requisition.mp4')},
@@ -392,6 +396,24 @@ const videosData = [
 ];
 
 // ========== RENDER ==========
+function getBadge(item, type) {
+  if (type === 'videos') {
+    if (item.videoSrc) return '<div class="file-badge">MP4</div>';
+    return '';
+  }
+  if (item.embedPdf) return '<div class="file-badge">PDF</div>';
+  if (item.externalUrl) {
+    if (item.externalUrl.includes('HCM_Adoption_Progress')) {
+      return '<div class="file-badge badge-html">HTML</div>';
+    }
+    if (item.externalUrl.includes('smartsheet')) {
+      return '<div class="file-badge badge-url">SHEET</div>';
+    }
+    return '<div class="file-badge badge-url">DASH</div>';
+  }
+  return '';
+}
+
 function renderCards(data, gridId, type) {
   const grid = document.getElementById(gridId);
   grid.innerHTML = '';
@@ -402,9 +424,7 @@ function renderCards(data, gridId, type) {
     const c = document.createElement('div');
     c.className = 'card'; c.dataset.cat = item.cat;
     c.dataset.title = item.title.toLowerCase(); c.dataset.desc = item.desc.toLowerCase();
-    const hasPdf = item.embedPdf && type !== 'videos';
-    const hasVideo = item.videoSrc && type === 'videos';
-    const badge = hasPdf ? '<div class="file-badge">PDF</div>' : hasVideo ? '<div class="file-badge">MP4</div>' : '';
+    const badge = getBadge(item, type);
     c.innerHTML = `<div class="card-thumb ${cls}"><div class="icon">${icon}</div>${item.duration?`<div class="vid-dur">${item.duration}</div>`:''}${badge}<div class="overlay"><span class="overlay-btn">${type==='videos'?'Watch':'View'}</span></div></div><div class="card-body"><div class="card-tag">${item.tag}</div><div class="card-title">${item.title}</div><div class="card-desc">${item.desc}</div></div>`;
     c.onclick = () => openModal(item, type);
     grid.appendChild(c);
@@ -426,10 +446,12 @@ function handleSearch(q) {
 function clearSearch() { const i=document.getElementById('search'); i.value=''; handleSearch(''); i.focus(); }
 
 // ========== MODAL ==========
-function openModal(item, type) {if (item.externalUrl) {
+function openModal(item, type) {
+  if (item.externalUrl) {
     window.open(item.externalUrl, '_blank');
     return;
   }
+
   document.getElementById('modal-title').textContent = item.title;
   const body = document.getElementById('modal-body');
   const footer = document.getElementById('modal-footer');
