@@ -213,14 +213,32 @@ function pdfRenderPage(num) {
     const canvas = document.getElementById('pdf-canvas');
     if (!canvas) { _pdfRendering = false; return; }
     const wrap = document.getElementById('pdf-canvas-wrap');
-    const wrapWidth = wrap ? wrap.clientWidth - 24 : 800;
-    const desiredWidth = Math.min(wrapWidth, 900);
+
+    // Use CSS width as the target display size — not pixel width
+    const wrapCssWidth = wrap ? wrap.clientWidth - 24 : 800;
+    const displayWidth = Math.min(wrapCssWidth, 860);
+
+    // Scale to fit the display width
     const viewport = page.getViewport({ scale: 1 });
-    const scale = desiredWidth / viewport.width;
+    const scale = displayWidth / viewport.width;
     const scaledViewport = page.getViewport({ scale });
-    canvas.width = scaledViewport.width;
-    canvas.height = scaledViewport.height;
-    page.render({ canvasContext: canvas.getContext('2d'), viewport: scaledViewport }).promise.then(() => {
+
+    // Account for devicePixelRatio so canvas is crisp on HiDPI/Retina screens
+    const dpr = window.devicePixelRatio || 1;
+
+    // Canvas internal pixel size = display size × dpr
+    canvas.width  = Math.floor(scaledViewport.width  * dpr);
+    canvas.height = Math.floor(scaledViewport.height * dpr);
+
+    // CSS display size = intended layout size (prevents squishing)
+    canvas.style.width  = Math.floor(scaledViewport.width)  + 'px';
+    canvas.style.height = Math.floor(scaledViewport.height) + 'px';
+
+    // Scale the drawing context so PDF.js renders at full DPR resolution
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    page.render({ canvasContext: ctx, viewport: scaledViewport }).promise.then(() => {
       _pdfRendering = false;
       const info = document.getElementById('pdf-page-info');
       const prev = document.getElementById('pdf-prev');
@@ -228,8 +246,8 @@ function pdfRenderPage(num) {
       if (info) info.textContent = `Page ${num} of ${_pdfDoc.numPages}`;
       if (prev) prev.disabled = num <= 1;
       if (next) next.disabled = num >= _pdfDoc.numPages;
-      const wrap = document.getElementById('pdf-canvas-wrap');
-      if (wrap) wrap.scrollTop = 0;
+      const rewrap = document.getElementById('pdf-canvas-wrap');
+      if (rewrap) rewrap.scrollTop = 0;
     });
   }).catch(() => { _pdfRendering = false; showPdfError(); });
 }
